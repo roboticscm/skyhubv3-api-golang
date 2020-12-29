@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <base href="http://localhost:8080">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/css/report-preview.css">
+</head>
+<body class="report-a4-portrait">
+    <form action="/language/report" method="post">
+        <button>Generate PDF</button>
+    </form>
+    
+    <table border="1" class="table" style="width: 100%">
+        <thead>
+            <th style="width: 30%">ID</th>
+            <th style="width: 30%">Key</th>
+            <th style="width: 40%">Value</th>
+        </thead>
+        <tbody>
+            {{range .}}
+                <tr>
+                    <td>
+                        {{.Id}}
+                    </td>
+                    <td>
+                        {{.Key}}
+                    </td>
+                    <td>
+                        {{.Value}}
+                    </td>
+                </tr>
+                
+            {{end}}
+        </tbody>
+    </table>
+
+    
+</body>
+</html>

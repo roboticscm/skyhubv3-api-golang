@@ -1,0 +1,9 @@
+{
+    "ServerPort": 8080,
+	"DBServer": "172.16.22.17",
+    "DBPort": 5434,
+    "DBName": "skyhubv3",
+	"DBUser": "skyhubv3",
+    "DBPassword": "skyhubv3",
+    "PrivateKey": "Skyhub@010116"
+}

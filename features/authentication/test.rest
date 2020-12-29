@@ -1,0 +1,20 @@
+POST http://localhost:8080/auth/login/
+Content-Type: application/json
+Authorization: Basic root:2019
+
+
+###
+
+POST http://localhost:8080/auth/refresh-token/
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsTmFtZSI6Ii8vVE9ETyIsIlVzZXJJZCI6IjEiLCJVc2VyTmFtZSI6InJvb3QifQ.GuFhw-fIXvBDWcmWffZD6gKAo_b1YQu0LdDYxYyv1yUYRrWazZ5GFFL5JywOUdaHDMs-qXkUtnv46OZAeCbhoDyf5qc_Kr2SACNVg7GFrj9WM5zeaXK-MBtclb5qGNVLi_qlGsa_LRObKL_YS6m1JPAO1RCzxyTlezhY8TxhEjM"
+}
+
+###
+
+DELETE http://localhost:8080/auth/logout/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsTmFtZSI6Ii8vVE9ETyIsIlVzZXJJZCI6IjI0NjA3NzExMzY3NzQ4Njc3NTgiLCJVc2VyTmFtZSI6InJvb3QiLCJleHAiOjE2MDc1ODY1OTd9.EmYw9gjIF7kk8ZTz3qUJb6Hj5LiInK013ck3fwfopICz5veZvQpr_ovbitFi62uimveCz9ev1ADHDEIjAfPBgSU-TeNNoGK8ax0SnP389FvrBsg5Hm7NscopwRKlJrWXDdP_FHdixey4cDwkjUT7IO0OFo9L7KpgWgNPtTcUpq0
+
