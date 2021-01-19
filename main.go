@@ -25,22 +25,13 @@ func init() {
 	// sync db
 	// beeGoDB.Sync()
 
-	// notify listener postgres
-	go notifyListener()
-
 	// Start HTTP Sever
 	app = server.Server{
 		Port: conf.ServerPort,
 	}
 }
 
-func main() {
-	app.Init()
-	app.RegisterRoute()
-	app.Start()
-}
-
-func notifyListener() {
+func notifyListener(b *db.Broker) {
 	reportProblem := func(ev pq.ListenerEventType, err error) {
 		if err != nil {
 			fmt.Println(err.Error())
@@ -55,6 +46,21 @@ func notifyListener() {
 
 	fmt.Println("Start monitoring PostgreSQL...")
 	for {
-		db.WaitForNotification(listener)
+		db.WaitForNotification(listener, b)
 	}
+}
+
+func main() {
+	app.Init()
+	b := &db.Broker{
+		make(map[chan string]bool),
+		make(chan (chan string)),
+		make(chan (chan string)),
+		make(chan string),
+	}
+	b.Start()
+	// notify listener postgres
+	go notifyListener(b)
+	app.RegisterRoute(b)
+	app.Start()
 }

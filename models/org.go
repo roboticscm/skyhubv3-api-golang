@@ -1,0 +1,59 @@
+package models
+
+type Org struct {
+	Id                  int64    `json:"id"`
+	Code                *string  `json:"code" orm:"null"`
+	Name                *string  `json:"name" orm:"null"`
+	NickName            *string  `json:"nickName" orm:"null"`
+	BusinessName        *string  `json:"businessName" orm:"null"`
+	FilesystemId        *int64   `json:"filesystemId" orm:"null"`
+	Filepath            *string  `json:"filepath" orm:"null"`
+	LogoFilename        *string  `json:"logoFilename" orm:"null"`
+	LoginLogoFilename   *string  `json:"loginLogoFilename" orm:"null"`
+	Host                *string  `json:"host" orm:"null"`
+	Portal              *string  `json:"portal" orm:"null"`
+	PortalStyle         *string  `json:"portalStyle" orm:"null"`
+	PortalLogin         *string  `json:"portalLogin" orm:"null"`
+	PortalLogoFilename  *string  `json:"portalLogoFilename" orm:"null"`
+	PortalEmr           *int32   `json:"portalEmr" orm:"null"`
+	PortalPacs          *int32   `json:"portalPacs" orm:"null"`
+	PortalPres          *int32   `json:"portalPres" orm:"null"`
+	PacsUrl             *string  `json:"pacsUrl" orm:"null"`
+	ViewerUrl           *string  `json:"viewerUrl" orm:"null"`
+	Locale              *string  `json:"locale" orm:"null"`
+	LocaleForeign       *string  `json:"localeForeign" orm:"null"`
+	TimeZone            *string  `json:"timeZone" orm:"null"`
+	DiffHour            *float64 `json:"diffHour" orm:"null"`
+	Headquarter         *int32   `json:"headquarter" orm:"null"`
+	FiscalCode          *string  `json:"fiscalCode" orm:"null"`
+	RegistrationNo      *string  `json:"registrationNo" orm:"null"`
+	TaxCode             *string  `json:"taxCode" orm:"null"`
+	AnniversaryDate     *int64   `json:"anniversaryDate" orm:"null"`
+	AmStart             *int64   `json:"amStart" orm:"null"`
+	AmEnd               *int64   `json:"amEnd" orm:"null"`
+	PmStart             *int64   `json:"pmStart" orm:"null"`
+	PmEnd               *int64   `json:"pmEnd" orm:"null"`
+	WorkHour            *int64   `json:"workHour" orm:"null"`
+	BreakTime           *int32   `json:"breakTime" orm:"null"`
+	Representative      *string  `json:"representative" orm:"null"`
+	RepresentativeTitle *string  `json:"representativeTitle" orm:"null"`
+	ExtDatabase         *string  `json:"extDatabase" orm:"null"`
+	CountryId           *int64   `json:"countryId" orm:"null"`
+	StateId             *int64   `json:"stateId" orm:"null"`
+	ProvinceId          *int64   `json:"provinceId" orm:"null"`
+	DistrictId          *int64   `json:"districtId" orm:"null"`
+	WardId              *int64   `json:"wardId" orm:"null"`
+	CodePrefix          *string  `json:"codePrefix" orm:"null"`
+	CodeSuffix          *string  `json:"codeSuffix" orm:"null"`
+	OrgType             *int32   `json:"orgType" orm:"null"`
+	ParentId            *int64   `json:"parentId" orm:"null"`
+	Sort                *int32   `json:"sort" orm:"null"`
+	Disabled            *bool    `json:"disabled" orm:"null"`
+	CreatedBy           *int64   `json:"createdBy" orm:"null"`
+	CreatedAt           *int64   `json:"createdAt" orm:"null"`
+	UpdatedBy           *int64   `json:"updatedBy" orm:"null"`
+	UpdatedAt           *int64   `json:"updatedAt" orm:"null"`
+	DeletedBy           *int64   `json:"deletedBy" orm:"null"`
+	DeletedAt           *int64   `json:"deletedAt" orm:"null"`
+	Version             *int32   `json:"version" orm:"null"`
+}

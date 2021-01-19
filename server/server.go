@@ -1,6 +1,7 @@
 package server
 
 import (
+	"backend/system/db"
 	"backend/system/error"
 	"backend/system/route"
 	"backend/system/slog"
@@ -27,12 +28,12 @@ func (s *Server) Init() {
 	}))
 }
 
-func (s *Server) RegisterRoute() {
+func (s *Server) RegisterRoute(b *db.Broker) {
 	if s.ServerEngine == nil {
 		slog.Fatal("You must init Server first")
 	}
 	rootRoute := route.RootRoute{}
-	rootRoute.RegisterRoute(s.ServerEngine)
+	rootRoute.RegisterRoute(s.ServerEngine, b)
 }
 
 func (s *Server) Start() {

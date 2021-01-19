@@ -5,7 +5,6 @@ import (
 	. "backend/system/models"
 	"backend/system/security"
 	"crypto/subtle"
-	"fmt"
 
 	"github.com/astaxie/beego/orm"
 	"github.com/labstack/echo/v4"
@@ -24,11 +23,11 @@ func BasicAuth(username string, password string, c echo.Context) (bool, error) {
 	}
 
 	if len(accounts) == 0 {
-		return false, CommonError(c, "Username ["+username+"] does not exist", "ACCOUNT.MSG.USERNAME_NOT_FOUND_ERROR")
+		return false, Errord400(c, "ACCOUNT.MSG.USERNAME_NOT_FOUND_ERROR", "")
 	}
 
 	if len(accounts) > 1 {
-		return false, CommonError(c, fmt.Sprintf("There are [%v] users which have the same username", len(accounts)), "ACCOUNT.MSG.TOO_MANY_ACCOUNT_ERROR")
+		return false, Errord400(c, "ACCOUNT.MSG.TOO_MANY_ACCOUNT_ERROR", "")
 	}
 
 	foundEncodedPassword := *accounts[0].Password

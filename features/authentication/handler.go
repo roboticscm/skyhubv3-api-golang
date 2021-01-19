@@ -5,6 +5,7 @@ import (
 	"backend/system/gbfunc"
 	"backend/system/keys"
 	. "backend/system/models"
+	"backend/system/security"
 	"backend/system/slog"
 	"errors"
 	"fmt"
@@ -59,12 +60,12 @@ func logoutHandler(c echo.Context) error {
 		userId, _ := strconv.ParseInt(userId, 10, 64)
 		o := orm.NewOrm()
 		sql := `
-		DELETE FROM refresh_token
-		WHERE account_id = ?
-	`
+			DELETE FROM refresh_token
+			WHERE account_id = ?
+		`
 		if _, err := o.Raw(sql, userId).Exec(); err != nil {
 			fmt.Println(err)
-			return CommonError(c, fmt.Sprintf("Unkown Error: %v", err), "LOGOUT")
+			return Errord400(c, "SYS.MSG.LOGOUT_ERROR", "")
 		}
 
 		return c.JSON(http.StatusOK, map[string]string{
@@ -113,9 +114,9 @@ func refreshTokenHandler(c echo.Context) error {
 	}
 
 	claims := j.Claims.(jwt.MapClaims)
-	userId, _ := strconv.ParseInt(claims["UserId"].(string), 10, 64)
+	userId, _ := strconv.ParseInt(claims["userId"].(string), 10, 64)
 
-	newToken, err := generateToken(false, userId, claims["UserName"].(string), claims["FullName"].(string))
+	newToken, err := generateToken(false, userId, claims["username"].(string), claims["fullName"].(string))
 	if err != nil {
 		return TokenError(c, err, "AUTH")
 	}
@@ -131,12 +132,13 @@ func generateToken(isRefreshToken bool, userId int64, username string, fullname 
 
 	claims := t.Claims.(jwt.MapClaims)
 
-	claims["UserId"] = strconv.FormatInt(userId, 10)
-	claims["UserName"] = username
-	claims["FullName"] = fullname
+	claims["userId"] = strconv.FormatInt(userId, 10)
+	claims["username"] = username
+	claims["fullName"] = fullname
 
+	const duration = 6000000 //second
 	if !isRefreshToken {
-		claims["exp"] = time.Now().Add(time.Second * 5).Unix()
+		claims["exp"] = time.Now().Add(time.Second * duration).Unix()
 	}
 
 	tokenString, err := t.SignedString(keys.SignKey)
@@ -171,6 +173,43 @@ func updateFreshToken(c echo.Context, userId int64, token string) (int64, error)
 		refreshToken.Token = &token
 		refreshToken.CreatedAt = &currentDateTime
 		return o.Update(&refreshToken)
+	}
+}
+
+func changePasswordHandler(c echo.Context) error {
+	userId := gbfunc.GetUserId(c)
+	accountInfo := &AccountInfo{}
+	if err := c.Bind(accountInfo); err != nil {
+		return BindObjectError(c, err, "AUTH")
+	}
+
+	o := orm.NewOrm()
+	accounts := []Account{}
+
+	sql := `
+		SELECT * FROM account
+		WHERE id = ?
+			AND password = ?
+	`
+	encodedCurrentPassword := security.EncodeSHA1Password(accountInfo.CurrentPassword)
+	if _, err := o.Raw(sql, userId, encodedCurrentPassword).QueryRows(&accounts); err != nil {
+		return LoadObjectError(c, err, "ACCOUNT")
+	}
+
+	if len(accounts) == 0 {
+		return Errord400(c, "SYS.MSG.CURRENT_PASSWORD_IS_INCORRECT", "currentPassword")
+	} else {
+		account := accounts[0]
+		*account.Password = security.EncodeSHA1Password(accountInfo.NewPassword)
+		gbfunc.MakeUpdate(c, &account)
+		num, err := o.Update(&account)
+		if err != nil {
+			return Errord400(c, "SYS.MSG.UPDATE_NEW_PASSWORD_ERROR", "")
+		} else {
+			c.JSON(200, map[string]int64{"messge": num})
+		}
+
+		return nil
 	}
 }
 

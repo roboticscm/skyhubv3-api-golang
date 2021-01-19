@@ -1,0 +1,3 @@
+GET http://localhost:8080/branch?fromOrgType=1&toOrgType=10&includeDisabled=false&includeDeleted=false
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJGdWxsTmFtZSI6Ii8vVE9ETyIsIlVzZXJJZCI6IjEiLCJVc2VyTmFtZSI6InJvb3QiLCJleHAiOjE2MTY1OTk1MDR9.RZU0U-VPOE44Us-UgpQE6y5-uKBnyMD3Tn14Yj-2ZpUl__tZ-QAQfy7Gq7bXbe71vjVZWHbj3hCI_VKfiYKHV-tjp7AEj6IBVTJc4ys4hXza93vDzDFx14OLCcQjfapN-aCdFYgeWBV9TUJ06jtF9DjFXtRSNgwsnQ6rQ6cdA40
